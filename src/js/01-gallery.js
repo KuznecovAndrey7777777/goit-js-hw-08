@@ -34,6 +34,7 @@ new SimpleLightbox('.gallery a', {
     captionDelay: 250,
 });
 
+
 // Завдання 1 - бібліотека SimpleLightbox
 // Виконуй це завдання у файлах 01-gallery.html і 01-gallery.js. Розбий його на декілька підзавдань:
 
