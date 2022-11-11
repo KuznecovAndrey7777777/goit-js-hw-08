@@ -14,7 +14,7 @@ player.on('timeupdate', throttle(element => {
 }, 1000));
 
 // Зберігання часу відтворення у локальному сховищі. Ключем для сховища буде рядок "videoplayer-current-time"
-if ('videoplayer - current - time' || 0) {
+if ('videoplayer - current - time' !== 0) {
     player
         .setCurrentTime(localStorage.getItem('videoplayer-current-time'))
         .catch(function (error) {
