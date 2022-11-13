@@ -5,11 +5,42 @@ import throttle from 'lodash.throttle';
 const iframe = document.querySelector('iframe');
 const player = new Player(iframe);
 
-player.on('timeupdate', throttle(onPlay, 1000));
+player.on('play', function () {
+    console.log('played the video!');
+});
 
-function onPlay(element) { localStorage.setItem('videoplayer-current-time', JSON.stringify(element.seconds)) }
+player.on(
+    'timeupdate',
+    throttle(data => {
+        localStorage.setItem(
+            'videoplayer-current-time',
+            JSON.stringify(data.seconds)
+        );
+        // console.log(Number.parseInt(data.seconds));
+    }, 1000)
+);
 
-player.setCurrentTime(Number(localStorage.getItem('videoplayer-current-time')));
+player
+    .setCurrentTime(localStorage.getItem('videoplayer-current-time'))
+    .then(function (seconds) { })
+    .catch(function (error) {
+        switch (error.name) {
+            case 'RangeError':
+                console.log('error');
+                // the time was less than 0 or greater than the video’s duration
+                break;
+
+            default:
+                // some other error occurred
+                break;
+        }
+    });
+
+// player.on('timeupdate', throttle(onPlay, 1000));
+
+// function onPlay(element) { localStorage.setItem('videoplayer-current-time', JSON.stringify(element.seconds)) }
+
+// player.setCurrentTime(Number(localStorage.getItem('videoplayer-current-time')));
 
 // Завдання 2 - відеоплеєр
 // HTML містить <iframe> з відео для Vimeo плеєра. Напиши скрипт, який буде зберігати поточний час відтворення відео у локальне сховище і, після перезавантаження сторінки, продовжувати відтворювати відео з цього часу.
