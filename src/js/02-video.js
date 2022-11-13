@@ -19,17 +19,11 @@ player.on(
 // Зберігання часу відтворення у локальному сховищі. Ключем для сховища буде рядок "videoplayer-current-time"
 if (localStorage.getItem('videoplayer-current-time') !== null) {
     player
-        .setCurrentTime(localStorage.getItem('videoplayer-current-time'))
+        .setCurrentTime(Number(localStorage.getItem('videoplayer-current-time')))
         .catch(function (error) {
             console.error(error);
         });
 }
-
-// player.on('timeupdate', throttle(onPlay, 1000));
-
-// function onPlay(element) { localStorage.setItem('videoplayer-current-time', JSON.stringify(element.seconds)) }
-
-// player.setCurrentTime(Number(localStorage.getItem('videoplayer-current-time')));
 
 // Завдання 2 - відеоплеєр
 // HTML містить <iframe> з відео для Vimeo плеєра. Напиши скрипт, який буде зберігати поточний час відтворення відео у локальне сховище і, після перезавантаження сторінки, продовжувати відтворювати відео з цього часу.
