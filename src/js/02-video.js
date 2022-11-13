@@ -6,20 +6,24 @@ const iframe = document.querySelector('iframe');
 const player = new Player(iframe);
 
 // Відстеження події timeupdate, зберігання часу відтворення у локальне сховище, оновлення часу відтворення зі збереженої позиції.
-player.on('timeupdate', throttle(element => {
-    localStorage.setItem(
-        'videoplayer-current-time',
-        JSON.stringify(element.seconds)
-    );
-}, 1000));
+player.on(
+    'timeupdate',
+    throttle(element => {
+        localStorage.setItem(
+            'videoplayer-current-time',
+            JSON.stringify(element.seconds)
+        );
+    }, 1000)
+);
 
 // Зберігання часу відтворення у локальному сховищі. Ключем для сховища буде рядок "videoplayer-current-time"
-player
-    .setCurrentTime(localStorage.getItem('videoplayer-current-time'||0))
-    .catch(function (error) {
-        console.error(error);
-    });
-
+if (localStorage.getItem('videoplayer-current-time') !== null) {
+    player
+        .setCurrentTime(localStorage.getItem('videoplayer-current-time'))
+        .catch(function (error) {
+            console.error(error);
+        });
+}
 
 // player.on('timeupdate', throttle(onPlay, 1000));
 
